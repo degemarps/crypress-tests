@@ -9,6 +9,7 @@ describe('First test suite', () => {
 
   it('First test', () => {
     cy.get('[data-cy="imputEmail1"]')
+    cy.contains('button', 'Sign in')
   })
 
   it('Second test', () => {
@@ -34,7 +35,7 @@ describe('First test suite', () => {
     })
   })
 
-  it.only('Extract text value', () => {
+  it('Extract text value', () => {
     // 1
     cy.get('[for="exampleInputEmail1"]').should('contain', 'Email address')
 
@@ -59,5 +60,23 @@ describe('First test suite', () => {
     cy.get('#exampleInputEmail1').invoke('prop', 'value').should('contain', 'test@test.com').then( prop => {
       expect(prop).to.equal('test@test.com')
     })
+  })
+
+  it.only('Radion button and checkbox', () => {
+    cy.contains('nb-card', 'Using the Grid').find('[type="radio"]').then( radionButtons => {
+      cy.wrap(radionButtons).eq(0).check({force: true}).should('be.checked')
+      cy.wrap(radionButtons).eq(1).check({force: true})
+      cy.wrap(radionButtons).eq(0).should('not.be.checked')
+      cy.wrap(radionButtons).eq(2).should('be.disabled')
+    })
+
+    cy.visit('/')
+    cy.contains('Modal & Overlays').click()
+    cy.contains('Toastr').click()
+
+    cy.get('[type="checkbox"]').check({force: true})
+    cy.get('[type="checkbox"]').uncheck({force: true})
+    cy.get('[type="checkbox"]').eq(0).click({force: true})
+    cy.get('[type="checkbox"]').eq(1).check({force: true})
   })
 })
