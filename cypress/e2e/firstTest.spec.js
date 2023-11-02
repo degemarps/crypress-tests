@@ -63,6 +63,7 @@ describe('First test suite', () => {
   })
 
   it.only('Radion button and checkbox', () => {
+    // Radion buttons
     cy.contains('nb-card', 'Using the Grid').find('[type="radio"]').then( radionButtons => {
       cy.wrap(radionButtons).eq(0).check({force: true}).should('be.checked')
       cy.wrap(radionButtons).eq(1).check({force: true})
@@ -70,10 +71,12 @@ describe('First test suite', () => {
       cy.wrap(radionButtons).eq(2).should('be.disabled')
     })
 
+    // Going to another page
     cy.visit('/')
     cy.contains('Modal & Overlays').click()
     cy.contains('Toastr').click()
 
+    // Checkboxes
     cy.get('[type="checkbox"]').check({force: true})
     cy.get('[type="checkbox"]').uncheck({force: true})
     cy.get('[type="checkbox"]').eq(0).click({force: true})
