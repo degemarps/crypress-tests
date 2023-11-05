@@ -62,7 +62,7 @@ describe('First test suite', () => {
     })
   })
 
-  it.only('Radion button and checkbox', () => {
+  it('Radion button and checkbox', () => {
     // Radion buttons
     cy.contains('nb-card', 'Using the Grid').find('[type="radio"]').then( radionButtons => {
       cy.wrap(radionButtons).eq(0).check({force: true}).should('be.checked')
@@ -81,5 +81,26 @@ describe('First test suite', () => {
     cy.get('[type="checkbox"]').uncheck({force: true})
     cy.get('[type="checkbox"]').eq(0).click({force: true})
     cy.get('[type="checkbox"]').eq(1).check({force: true})
+  })
+
+  it.only('Lists and dropdowns', () => {
+
+    // 1
+    cy.get('nav nb-select').click()
+    cy.get('.options-list').contains('Dark').click()
+    cy.get('nav nb-select').should('contain', 'Dark')
+
+    // 2
+    cy.get('nav nb-select').then( dropDown => {
+      cy.wrap(dropDown).click()
+      cy.get('.options-list nb-option').each((item, index) => { // iterate on options list of the dropdown
+        const itemText = item.text().trim()
+        cy.wrap(item).click() // click on option
+        cy.wrap(dropDown).should('contain', itemText) // validate text on dropdown
+        if (index < 3) {
+          cy.wrap(dropDown).click()
+        }
+      })
+    })
   })
 })
