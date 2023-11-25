@@ -10,7 +10,7 @@ describe('Fourth test suite', () => {
     cy.get('nb-tooltip').should('contain', 'This is a tooltip')
   })
 
-  it('Dilog box', () => {
+  it('Dialog box', () => {
     cy.visit('/')
     cy.contains('Tables & Data').click()
     cy.contains('Smart Table').click()
